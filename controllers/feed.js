@@ -22,6 +22,12 @@ exports.createPost = (req, res, next) => {
     error.statusCode = 422;
     throw error;
   }
+  if (!req.file) {
+    const error = new Error('No image required');
+    error.statusCode = 422;
+    throw error;
+  }
+  const imageUrl = req.file.path;
   const title = req.body.title;
   const content = req.body.content;
   const post = new Post({
@@ -30,7 +36,7 @@ exports.createPost = (req, res, next) => {
     creator: {
       name: 'Nico'
     },
-    imageUrl: 'images/nico-av.jpg',
+    imageUrl: imageUrl,
     creator: { name: 'Nico' }
   });
   post
